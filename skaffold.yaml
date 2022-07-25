@@ -1,0 +1,44 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  googleCloudBuild:
+    projectId: tcc-ms-353211
+  artifacts:
+    - image: us.gcr.io/tcc-ms-353211/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: us.gcr.io/tcc-ms-353211/users
+      context: users
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: us.gcr.io/tcc-ms-353211/products
+      context: products
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: us.gcr.io/tcc-ms-353211/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+
+
